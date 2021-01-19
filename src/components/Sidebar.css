@@ -5,6 +5,7 @@
   border-radius: 10px;
   text-align: center;
   height: fit-content;
+
 }
 
 .sidebar__avatar {
@@ -16,6 +17,7 @@
   font-size: 12px;
   padding: 2px;
 }
+
 .sidebar__top > h2 {
   font-size: 18px;
 }
@@ -86,6 +88,7 @@
   font-weight: bolder;
   cursor: pointer;
 }
+
 .sidebar__recentItem:hover {
   background-color: whitesmoke;
   border-radius: 10px;

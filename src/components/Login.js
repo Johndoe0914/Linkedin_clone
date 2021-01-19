@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import { auth } from '../firebase';
-import login from '../features/userSlice';
+import { login } from '../features/userSlice';
 import './Login.css';
 
 const Login = () => {
@@ -13,12 +13,21 @@ const Login = () => {
         profilePic: ''
 
     })
+    const {email, name, password, profilePic} = userDetails
 
     const dispatch = useDispatch()
 
     const loginToApp = (e)=> {
         e.preventDefault()
-        
+        auth.signInWithEmailAndPassword(email, password)
+        .then(userAuth => {
+            dispatch(login({
+                email: userAuth.user.email,
+                    uid: userAuth.user.uid,
+                    displayName: userAuth.user.name,
+                    profileURL: userAuth.user.photoURL
+            }))
+        }).catch(error => alert(error))
     }
 
     const handleChange = name => event => {
@@ -27,12 +36,14 @@ const Login = () => {
     }
 
     const register = () => {
-        const {email, name, password, profilePic} = userDetails
+        
         console.log(userDetails)
         
         // if( email === "" || password === "" || name === "" ) {
         //     return alert('Please complete the fields')
         // }
+
+     
 
         auth.createUserWithEmailAndPassword(email, password)
         .then((userAuth) => {
@@ -40,8 +51,7 @@ const Login = () => {
                 displayName: name,
                 photoURL: profilePic
             })
-            .then(() => {
-                dispatch(
+            .then(() => {dispatch(
                     login({
                     email: userAuth.user.email,
                     uid: userAuth.user.uid,
@@ -49,7 +59,8 @@ const Login = () => {
                     photoURL: profilePic
                 }))
             })
-        }).catch(error => {alert(error.message)})
+        }).catch(error => {alert(error
+            )})
     }
 
 
